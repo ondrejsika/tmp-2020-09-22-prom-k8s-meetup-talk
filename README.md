@@ -51,4 +51,4 @@ kubectl apply -f ./example/
 - User: `admin`
 - Password: `prom-operator`
 
-Our example dashboard: `https://grafana.k8s.sikademo.com/d/ex01/example-dashboard`
+Our example dashboard: https://grafana.k8s.sikademo.com/d/ex01/example-dashboard
