@@ -1,0 +1,83 @@
+nameOverride: prom
+
+prometheusOperator:
+  createCustomResource: false
+  serviceMonitor:
+    selfMonitor: false
+
+defaultRules:
+  create: false
+
+grafana:
+  serviceMonitor:
+    selfMonitor: false
+  ingress:
+    enabled: true
+    annotations: {}
+    hosts:
+      - grafana.k8s.sikademo.com
+    paths:
+      - /
+alertmanager:
+  serviceMonitor:
+    selfMonitor: false
+  ingress:
+    enabled: true
+    annotations: {}
+    hosts:
+      - alertmanager.k8s.sikademo.com
+    paths:
+      - /
+prometheus:
+  prometheusSpec:
+    serviceMonitorNamespaceSelector: {}
+    serviceMonitorSelector: {}
+    ruleNamespaceSelector: {}
+    ruleSelector: {}
+
+  serviceMonitor:
+    selfMonitor: false
+  namespaceSelector:
+    any: true
+  serviceMonitorNamespaceSelector:
+    any: true
+  serviceMonitorSelector:
+    any: true
+  ruleNamespaceSelector:
+    any: true
+  ruleSelector:
+    any: true
+
+  thanosIngress:
+    enabled: true
+    hosts:
+      - thanos-gateway.k8s.sikademo.com
+    paths:
+      - /
+  ingress:
+    enabled: true
+    hosts:
+      - prometheus.k8s.sikademo.com
+    paths:
+      - /
+
+kubeApiServer:
+  enabled: false
+kubelet:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+coreDns:
+  enabled: false
+kubeDns:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeProxy:
+  enabled: false
+kubeStateMetrics:
+  enabled: false
+nodeExporter:
+  enabled: false
