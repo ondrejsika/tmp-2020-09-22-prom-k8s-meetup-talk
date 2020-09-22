@@ -49,12 +49,6 @@ prometheus:
   ruleSelector:
     any: true
 
-  thanosIngress:
-    enabled: true
-    hosts:
-      - thanos-gateway.k8s.sikademo.com
-    paths:
-      - /
   ingress:
     enabled: true
     hosts:
