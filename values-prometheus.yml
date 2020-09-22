@@ -1,61 +1,58 @@
 nameOverride: prom
 
-prometheusOperator:
-  createCustomResource: false
-  serviceMonitor:
-    selfMonitor: false
-
+# Disable Default Prometheus Rules
 defaultRules:
   create: false
 
-grafana:
+  # Disable self monitor
   serviceMonitor:
     selfMonitor: false
-  ingress:
-    enabled: true
-    annotations: {}
-    hosts:
-      - grafana.k8s.sikademo.com
-    paths:
-      - /
-
-alertmanager:
-  serviceMonitor:
-    selfMonitor: false
-  ingress:
-    enabled: true
-    annotations: {}
-    hosts:
-      - alertmanager.k8s.sikademo.com
-    paths:
-      - /
 
 prometheus:
+  ingress:
+    enabled: true
+    hosts:
+      - prometheus.k8s.sikademo.com # --- PROMETHEUS DOMAIN ---
+    paths:
+      - /
+
+  # Allow scrapping every ServiceMonitors in every namespace
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false
     podMonitorSelectorNilUsesHelmValues: false
     ruleSelectorNilUsesHelmValues: false
 
+  # Disable self monitor
   serviceMonitor:
     selfMonitor: false
-  namespaceSelector:
-    any: true
-  serviceMonitorNamespaceSelector:
-    any: true
-  serviceMonitorSelector:
-    any: true
-  ruleNamespaceSelector:
-    any: true
-  ruleSelector:
-    any: true
 
+grafana:
   ingress:
     enabled: true
+    annotations: {}
     hosts:
-      - prometheus.k8s.sikademo.com
+      - grafana.k8s.sikademo.com # --- GRAFANA DOMAIN ---
     paths:
       - /
 
+  # Disable self monitor
+  serviceMonitor:
+    selfMonitor: false
+
+alertmanager:
+  ingress:
+    enabled: true
+    annotations: {}
+    hosts:
+      - alertmanager.k8s.sikademo.com # --- ALERTMANAGER DOMAIN ---
+    paths:
+      - /
+
+  # Disable self monitor
+  serviceMonitor:
+    selfMonitor: false
+
+# Disable Scrapping of Kubernetes Components
 kubeApiServer:
   enabled: false
 
@@ -85,3 +82,7 @@ kubeStateMetrics:
 
 nodeExporter:
   enabled: false
+
+# Deploy CRDs manually
+prometheusOperator:
+  createCustomResource: false
