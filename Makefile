@@ -33,3 +33,4 @@ prom-uninstall:
 
 reload:
 	curl -X POST https://prometheus.k8s.sikademo.com/-/reload
+	curl -X POST https://alertmanager.k8s.sikademo.com/-/reload

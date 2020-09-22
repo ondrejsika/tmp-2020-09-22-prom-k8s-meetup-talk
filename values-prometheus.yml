@@ -55,6 +55,38 @@ alertmanager:
   serviceMonitor:
     selfMonitor: false
 
+  # Example Alert Manager Config
+  config:
+    global:
+      smtp_smarthost: mail.oxs.cz:587
+      smtp_from: prom@sikamail.cz
+      smtp_hello: alertmanager
+      smtp_auth_identity: prom@sikamail.cz
+      smtp_auth_username: prom@sikamail.cz
+      smtp_auth_password: ihategoogle
+      smtp_require_tls: true
+      resolve_timeout: 10s
+
+    route:
+      group_by:
+        - alertname
+        - service
+      group_wait: 15s
+      group_interval: 30s
+      repeat_interval: 10m
+      receiver: mails
+      routes:
+        - receiver: "mails"
+          continue: true
+
+    receivers:
+      - name: "mails"
+        email_configs:
+          - to: a@sikamail.cz
+            send_resolved: true
+            tls_config:
+              insecure_skip_verify: true
+
 # Disable Scrapping of Kubernetes Components
 kubeApiServer:
   enabled: false
