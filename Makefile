@@ -1,4 +1,5 @@
 helm:
+	helm repo add ondrejsika https://helm.oxs.cz
 	helm repo add hashicorp https://helm.releases.hashicorp.com
 	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 	helm repo add stable https://kubernetes-charts.storage.googleapis.com/
@@ -15,6 +16,10 @@ consul:
 
 ingress:
 	kubectl apply -f https://raw.githubusercontent.com/ondrejsika/kubernetes-ingress-traefik/master/ingress-traefik-consul.yml
+
+maildev:
+	kubectl apply -f ns-maildev.yml
+	helm upgrade --install -n maildev maildev ondrejsika/maildev --set host=mail.k8s.sikademo.com
 
 crd:
 	kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/release-0.38/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml

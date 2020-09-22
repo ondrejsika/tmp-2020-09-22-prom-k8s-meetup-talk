@@ -58,13 +58,10 @@ alertmanager:
   # Example Alert Manager Config
   config:
     global:
-      smtp_smarthost: mail.oxs.cz:587
-      smtp_from: prom@sikamail.cz
+      smtp_smarthost: maildev.maildev:25
+      smtp_from: monitoring-from@example.com
       smtp_hello: alertmanager
-      smtp_auth_identity: prom@sikamail.cz
-      smtp_auth_username: prom@sikamail.cz
-      smtp_auth_password: ihategoogle
-      smtp_require_tls: true
+      smtp_require_tls: false
       resolve_timeout: 10s
 
     route:
@@ -82,7 +79,7 @@ alertmanager:
     receivers:
       - name: "mails"
         email_configs:
-          - to: a@sikamail.cz
+          - to: monitoring-to@example.com
             send_resolved: true
             tls_config:
               insecure_skip_verify: true
