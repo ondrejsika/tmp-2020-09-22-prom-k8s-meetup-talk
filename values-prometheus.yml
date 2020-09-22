@@ -18,6 +18,7 @@ grafana:
       - grafana.k8s.sikademo.com
     paths:
       - /
+
 alertmanager:
   serviceMonitor:
     selfMonitor: false
@@ -28,6 +29,7 @@ alertmanager:
       - alertmanager.k8s.sikademo.com
     paths:
       - /
+
 prometheus:
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false
@@ -62,21 +64,30 @@ prometheus:
 
 kubeApiServer:
   enabled: false
+
 kubelet:
   enabled: false
+
 kubeControllerManager:
   enabled: false
+
 coreDns:
   enabled: false
+
 kubeDns:
   enabled: false
+
 kubeEtcd:
   enabled: false
+
 kubeScheduler:
   enabled: false
+
 kubeProxy:
   enabled: false
+
 kubeStateMetrics:
   enabled: false
+
 nodeExporter:
   enabled: false

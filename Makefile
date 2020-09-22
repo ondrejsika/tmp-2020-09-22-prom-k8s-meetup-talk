@@ -25,7 +25,7 @@ crd:
 	kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/release-0.38/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
 
 prom:
-	kubectl apply -f ns.yml
+	kubectl apply -f ns-prometheus.yml
 	helm upgrade --install -n prometheus-stack prometheus-stack prometheus-community/kube-prometheus-stack -f values-prometheus.yml
 
 prom-uninstall:
