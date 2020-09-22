@@ -1,5 +1,20 @@
-ns:
-	kubectl apply -f ns.yml
+helm:
+	helm repo add hashicorp https://helm.releases.hashicorp.com
+	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+	helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+	helm repo update
+
+longhorn:
+	kubectl delete sc --all
+	kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
+	kubectl patch storageclass longhorn -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+
+consul:
+	kubectl apply -f ns-consul.yml
+	helm upgrade --install consul -n consul hashicorp/consul -f values-consul.yml
+
+ingress:
+	kubectl apply -f https://raw.githubusercontent.com/ondrejsika/kubernetes-ingress-traefik/master/ingress-traefik-consul.yml
 
 crd:
 	kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/release-0.38/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
@@ -9,19 +24,9 @@ crd:
 	kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/release-0.38/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
 	kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/release-0.38/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
 
-prom-patch:
-	kubectl patch -n prometheus-stack prometheus   prometheus-stack-prometheus --type merge -p '{"spec":{"serviceMonitorNamespaceSelector": null}}'
-	kubectl patch -n prometheus-stack prometheus   prometheus-stack-prometheus --type merge -p '{"spec":{"serviceMonitorSelector": null}}'
-	kubectl patch -n prometheus-stack prometheus   prometheus-stack-prometheus --type merge -p '{"spec":{"ruleNamespaceSelector": null}}'
-	kubectl patch -n prometheus-stack prometheus   prometheus-stack-prometheus --type merge -p '{"spec":{"ruleSelector": null}}'
-
-	kubectl patch -n prometheus-stack prometheus   prometheus-stack-prometheus --type merge -p '{"spec":{"serviceMonitorNamespaceSelector": {}}}'
-	kubectl patch -n prometheus-stack prometheus   prometheus-stack-prometheus --type merge -p '{"spec":{"serviceMonitorSelector": {}}}'
-	kubectl patch -n prometheus-stack prometheus   prometheus-stack-prometheus --type merge -p '{"spec":{"ruleNamespaceSelector": {}}}'
-	kubectl patch -n prometheus-stack prometheus   prometheus-stack-prometheus --type merge -p '{"spec":{"ruleSelector": {}}}'
-
 prom:
-	helm upgrade --install -n prometheus-stack prometheus-stack prometheus-community/kube-prometheus-stack -f values.yml
+	kubectl apply -f ns.yml
+	helm upgrade --install -n prometheus-stack prometheus-stack prometheus-community/kube-prometheus-stack -f values-prometheus.yml
 
 prom-uninstall:
 	helm uninstall -n prometheus-stack prometheus-stack

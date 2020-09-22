@@ -30,10 +30,9 @@ alertmanager:
       - /
 prometheus:
   prometheusSpec:
-    serviceMonitorNamespaceSelector: {}
-    serviceMonitorSelector: {}
-    ruleNamespaceSelector: {}
-    ruleSelector: {}
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
 
   serviceMonitor:
     selfMonitor: false
