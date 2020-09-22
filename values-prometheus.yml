@@ -35,6 +35,9 @@ grafana:
     paths:
       - /
 
+  # Disable default dashboards
+  defaultDashboardsEnabled: false
+
   # Disable self monitor
   serviceMonitor:
     selfMonitor: false

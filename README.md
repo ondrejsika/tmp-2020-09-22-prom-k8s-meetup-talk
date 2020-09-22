@@ -44,3 +44,11 @@ kubectl apply -f ./example/
 - Targets - https://prometheus.k8s.sikademo.com/targets
 - Alerts - https://prometheus.k8s.sikademo.com/alerts
 - Graph - https://prometheus.k8s.sikademo.com/graph?g0.range_input=1h&g0.expr=example_requests&g0.tab=1
+
+### Grafana
+
+- URL: https://grafana.k8s.sikademo.com
+- User: `admin`
+- Password: `prom-operator`
+
+Our example dashboard: `https://grafana.k8s.sikademo.com/d/ex01/example-dashboard`
