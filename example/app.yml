@@ -54,7 +54,7 @@ metadata:
     app: metrics-example
 spec:
   rules:
-    - host: me.k8s1.mstp.cz
+    - host: me.k8s.sikademo.com
       http:
         paths:
           - path: /
