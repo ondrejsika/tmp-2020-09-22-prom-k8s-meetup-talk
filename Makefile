@@ -12,7 +12,10 @@ longhorn:
 
 consul:
 	kubectl apply -f k8s/ns-consul.yml
-	helm upgrade --install consul -n consul hashicorp/consul -f values/consul/general.yml
+	helm upgrade --install \
+		consul hashicorp/consul \
+		-n consul \
+		-f values/consul/general.yml
 
 ingress:
 	kubectl apply -f https://raw.githubusercontent.com/ondrejsika/kubernetes-ingress-traefik/master/ingress-traefik-consul.yml
