@@ -24,6 +24,12 @@ Create CRDs
 make crd
 ```
 
+Use example configuration (values)
+
+```
+make copy-example-values
+```
+
 Install Prometheus
 
 ```
